@@ -3,19 +3,25 @@ import matplotlib.pyplot as plt
 
 client = MongoClient('mongodb://localhost:27017')
 db = client['nevod']
+coincidences_coll = db['coincidences_1000']
 
-sorted_documents = list(db['coincidences'].find().sort('event_time_ns_coll', 1))
+# Агрегация для подсчета количества документов с одинаковым delta_time
+pipeline = [
+    {
+        '$group': {
+            '_id': '$delta_time',
+            'count': {'$sum': 1}
+        }
+    }
+]
 
-delta_numbers = []
+result = list(coincidences_coll.aggregate(pipeline))
+delta_times = [abs(doc['_id']) for doc in result]
+counts = [doc['count'] for doc in result]
 
-
-for doc in sorted_documents:
-    delta_number = doc['event_time_ns_coll'] - doc['eas_event_time_ns']
-    delta_numbers.append(delta_number)
-
-plt.scatter(range(len(delta_numbers)), delta_numbers, s=10)
-plt.xlabel('Номер документа')
-plt.ylabel('Delta Number (event_time_ns_coll - eas_event_time_ns)')
-plt.title('Точечный график Delta Number от номера документа')
+plt.bar(delta_times, counts)
+plt.xlabel('Delta Time (event_time_ns_coll - eas_event_time_ns)')
+plt.ylabel('Число файлов')
+plt.title('График числа файлов по Delta Time')
 plt.grid(True)
 plt.show()
