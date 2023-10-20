@@ -13,8 +13,8 @@ time_range_stage = {
     }
 }
 
-ё
-coincidences_coll = db['coincidences_1000']
+
+coincidences_coll = db['coincidences_1000'] #новая коллекция, в которую запишутся совпадения
 
 pipeline = [
     {
@@ -23,7 +23,7 @@ pipeline = [
         }
     }
 ]
-unique_event_time_ns_values = [doc['_id'] for doc in db['coll'].aggregate(pipeline)]
+unique_event_time_ns_values = [doc['_id'] for doc in db['coll'].aggregate(pipeline)] # коллекция 'coll' данные с невода
 
 batches = [unique_event_time_ns_values[i:i+batch_size] for i in range(0, len(unique_event_time_ns_values), batch_size)]
 
@@ -37,7 +37,7 @@ for batch in batches:
         },
         {
             '$lookup': {
-                'from': 'event',
+                'from': 'event',  # коллекция 'event' с данными из невод шала
                 'let': {
                     'start_range': '$start_range',
                     'end_range': '$end_range'
