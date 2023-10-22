@@ -80,7 +80,7 @@ for batch in batches:
             for match in doc['event_matches']:
                 print(match)
             print("-------------------------------")
-
+# были переименовалы коллекции: "coll" -> "nevod_decor"; "event" -> "nevod_eas"
 # Импортируется библиотека MongoClient из PyMongo, чтобы устанавливать соединение с MongoDB.
 #
 # Устанавливается соединение с базой данных MongoDB 'nevod'
