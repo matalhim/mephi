@@ -30,23 +30,21 @@ params, covariance = curve_fit(gaussian, delta_times, counts, p0=[max(counts), n
 # Найти параметры
 A, mu, sigma = params
 
-# Округление максимума до целых
-maximum_index = np.argmax(gaussian(delta_times, A, mu, sigma))
-maximum_time = round(delta_times[maximum_index])
+# Найти максимум аппроксимации
+maximum_time = round(mu)
 
-# Нарисовать аппроксимацию
-x = np.linspace(min(delta_times), max(delta_times), 1000)
-y = gaussian(x, A, mu, sigma)
-plt.plot(x, y, 'r', label='Аппроксимация')
-
-maximum_value = y[maximum_index]
-plt.vlines(delta_times[maximum_index], 0, maximum_value, color='blue', linestyle='--', label=f'Максимум (delta_time={maximum_time})')
-
-# Нарисовать график гистограммы
+# Нарисовать гистограмму
 plt.bar(delta_times, counts, align='center', alpha=0.5)
-plt.xlabel('Delta Time (event_time_ns_coll - eas_event_time_ns)')
-plt.ylabel('Число файлов')
-plt.title('Гистограмма числа файлов по Delta Time')
+plt.xlabel('Время между событиями, нс', fontsize=20)
+plt.ylabel('Число совместных событий', fontsize=20)
+plt.title('Гистограмма числа совместных событий', fontsize=24)
+
+# Ограничение графика до 800 нс
+plt.xlim(0, 800)
+
+# Показать максимум
+plt.vlines(maximum_time, 0, max(counts), color='blue', linestyle='--', label=f'Наиболее вероятная разница (delta_time={maximum_time})')
+
 
 plt.legend(loc='upper right')
 
