@@ -59,7 +59,7 @@ for batch in batches:
         }
     ]
 
-    cursor = db['coll'].aggregate(pipeline)
+    cursor = db['nevod_decor'].aggregate(pipeline)
 
 
     for doc in cursor:
