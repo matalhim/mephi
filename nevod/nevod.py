@@ -23,7 +23,7 @@ pipeline = [
         }
     }
 ]
-unique_event_time_ns_values = [doc['_id'] for doc in db['coll'].aggregate(pipeline)] # коллекция 'coll' данные с невода
+unique_event_time_ns_values = [doc['_id'] for doc in db['nevod_decor'].aggregate(pipeline)] # коллекция 'nevod_decor' данные с невода
 
 batches = [unique_event_time_ns_values[i:i+batch_size] for i in range(0, len(unique_event_time_ns_values), batch_size)]
 
@@ -37,7 +37,7 @@ for batch in batches:
         },
         {
             '$lookup': {
-                'from': 'event',  # коллекция 'event' с данными из невод шала
+                'from': 'nevod_eas',  # коллекция 'nevod_eas' с данными из невод шала
                 'let': {
                     'start_range': '$start_range',
                     'end_range': '$end_range'
