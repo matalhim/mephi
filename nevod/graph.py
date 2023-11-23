@@ -35,8 +35,8 @@ maximum_time = round(mu)
 
 # Нарисовать гистограмму
 plt.bar(delta_times, counts, align='center', alpha=0.5)
-plt.xlabel('Время между событиями, нс', fontsize=20)
-plt.ylabel('Число совместных событий', fontsize=20)
+plt.xlabel('Время между событиями\ndelta_time = event_time - eas_event_time, нс', fontsize=20)
+plt.ylabel('Число событий', fontsize=20)
 plt.title('Гистограмма числа совместных событий', fontsize=24)
 
 # Ограничение графика до 800 нс
@@ -44,9 +44,8 @@ plt.xlim(0, 800)
 
 # Показать максимум
 plt.vlines(maximum_time, 0, max(counts), color='blue', linestyle='--', label=f'Наиболее вероятная разница (delta_time={maximum_time})')
+plt.legend(loc='upper right', fontsize=20)
 
-
-plt.legend(loc='upper right')
 
 plt.grid(True)
 plt.show()
