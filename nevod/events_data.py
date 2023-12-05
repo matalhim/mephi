@@ -11,6 +11,7 @@ eas_events_corners = db.eas_events_corners
 
 # Создание новой коллекции events_data
 events_data = db.events_data
+events_data.delete_many({})
 
 # Обработка данных из coincidences_1000
 for coincidence in coincidences_1000:
