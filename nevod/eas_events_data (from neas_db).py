@@ -6,7 +6,7 @@ client = MongoClient('mongodb://localhost:27017')
 db = client['nevod']
 
 # Создание новой коллекции eas_events_data
-eas_events_data_collection = db['eas_events_data']
+eas_events_data_collection = db['eas_events_data(1)']
 
 # Получение данных из nevod_eas_events
 nevod_eas_events_cursor = db['nevod_eas_events'].find()

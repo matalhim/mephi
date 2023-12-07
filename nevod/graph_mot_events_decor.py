@@ -8,7 +8,7 @@ db = client['nevod']
 
 
 # Получение данных из коллекции not_events_decor_info
-cursor = db.not_events_decor_info.find({}, {'Theta': 1, 'Phi': 1})
+cursor = db.not_events_decor_info_1.find({}, {'Theta': 1, 'Phi': 1})
 data = list(cursor)
 
 # Закрытие соединения

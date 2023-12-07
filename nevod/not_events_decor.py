@@ -4,46 +4,35 @@ from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017')
 db = client['nevod']
 
-# Создание коллекции not_events_decor_info
-db.create_collection("not_events_decor_info")
+# Получение коллекций
+decor_events_info_collection = db.decor_events_info
+events_data_1_collection = db['events_data(1)']
+not_events_decor_info_collection = db['not_events_decor_info_1']
 
-# Выполнение запроса
+# Очищаем коллекцию перед добавлением новых данных
+not_events_decor_info_collection.delete_many({})
+
+# Создаем агрегацию с использованием $lookup для соединения двух коллекций
 pipeline = [
     {
-        '$lookup': {
-            'from': 'events_data',
-            'localField': 'id_nevod_decor',
-            'foreignField': 'decor_event_id',
-            'as': 'matching_events'
+        "$lookup": {
+            "from": "events_data(1)",
+            "localField": "id_nevod_decor",
+            "foreignField": "decor_event_id",
+            "as": "matched_docs"
         }
     },
     {
-        '$match': {
-            'matching_events': {'$eq': []}
+        "$match": {
+            "matched_docs": {"$eq": []}  # Выбираем только те документы, у которых нет совпадений
         }
     },
     {
-        '$project': {
-            '_id': 1,
-            'NRUN': 1,
-            'NEvent': 1,
-            'NtrackX': 1,
-            'NtrackY': 1,
-            'Ntrack': 1,
-            'Theta': 1,
-            'Phi': 1,
-            'IdEv': 1,
-            'Nview': 1,
-            'id_nevod_decor': 1,
-            'event_time_ns': 1
+        "$project": {
+            "matched_docs": 0  # Исключаем поле matched_docs из результирующих документов
         }
     }
 ]
 
-result = db.decor_events_info.aggregate(pipeline)
-
-# Сохранение результатов в коллекцию not_events_decor_info
-db.not_events_decor_info.insert_many(result)
-
-# Закрытие соединения
-client.close()
+# Выполняем агрегацию и добавляем результаты в новую коллекцию
+not_events_decor_info_collection.insert_many(decor_events_info_collection.aggregate(pipeline))

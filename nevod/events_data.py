@@ -7,10 +7,10 @@ db = client['nevod']
 # Загрузка данных из коллекций
 coincidences_1000 = db.coincidences_1000.find()
 decor_events_info = db.decor_events_info
-eas_events_corners = db.eas_events_corners
+eas_events_corners = db['eas_events_corners(1)']
 
 # Создание новой коллекции events_data
-events_data = db.events_data
+events_data = db['events_data(1)']
 events_data.delete_many({})
 
 # Обработка данных из coincidences_1000
