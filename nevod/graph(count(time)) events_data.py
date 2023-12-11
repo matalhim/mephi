@@ -22,9 +22,11 @@ for event_data in events_data:
 
 # Построение гистограммы
 plt.hist(time_differences, bins=50, color='blue', edgecolor='black')
-plt.title('Гистограмма разницы времени между decor_time и eas_time')
-plt.xlabel('Разница времени (ns)')
-plt.ylabel('Число событий')
+plt.title('Гистограмма разницы времени между decor_time и eas_time', fontsize=18)  # Set title font size
+plt.xlabel('Разница времени (ns)', fontsize=18)  # Set x-axis label font size
+plt.ylabel('Число событий', fontsize=18)  # Set y-axis label font size
+plt.xticks(fontsize=12)  # Set x-axis tick font size
+plt.yticks(fontsize=12)  # Set y-axis tick font size
 plt.show()
 
 # Закрытие соединения с MongoDB

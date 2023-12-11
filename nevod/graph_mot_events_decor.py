@@ -6,7 +6,6 @@ from collections import Counter
 client = MongoClient('mongodb://localhost:27017')
 db = client['nevod']
 
-
 # Получение данных из коллекции not_events_decor_info
 cursor = db.not_events_decor_info_1.find({}, {'Theta': 1, 'Phi': 1})
 data = list(cursor)
@@ -27,15 +26,15 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
 
 # График для Theta
 ax1.bar(theta_counts.keys(), theta_counts.values(), color='blue')
-ax1.set_xlabel('Theta (rounded)')
-ax1.set_ylabel('Number of Files')
-ax1.set_title('Distribution of Theta in not_events_decor_info')
+ax1.set_xlabel('Theta', fontsize=18)
+ax1.set_ylabel('Number of Files', fontsize=18)
+ax1.set_title('Distribution of Theta in not_events_decor_info', fontsize=18)
 
 # График для Phi
 ax2.bar(phi_counts.keys(), phi_counts.values(), color='green')
-ax2.set_xlabel('Phi (rounded)')
-ax2.set_ylabel('Number of Files')
-ax2.set_title('Distribution of Phi in not_events_decor_info')
+ax2.set_xlabel('Phi', fontsize=18)
+ax2.set_ylabel('Number of Files', fontsize=18)
+ax2.set_title('Distribution of Phi in not_events_decor_info', fontsize=18)
 
 # Регулировка расположения графиков
 plt.tight_layout()
