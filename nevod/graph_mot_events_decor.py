@@ -26,9 +26,9 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
 
 # График для Theta
 ax1.bar(theta_counts.keys(), theta_counts.values(), color='blue')
-ax1.set_xlabel('Theta', fontsize=18)
-ax1.set_ylabel('Number of Files', fontsize=18)
-ax1.set_title('Distribution of Theta in not_events_decor_info', fontsize=18)
+ax1.set_xlabel('Зенитный угол Theta', fontsize=18)
+ax1.set_ylabel('Число событий', fontsize=18)
+ax1.set_title('Гистограмма числа событий от зенитного угла', fontsize=18)
 
 # График для Phi
 ax2.bar(phi_counts.keys(), phi_counts.values(), color='green')

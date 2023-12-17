@@ -17,13 +17,13 @@ for event_data in events_data:
     eas_time = event_data.get('eas_time', 0)
 
     # Вычисление разницы между decor_time и eas_time
-    time_difference = abs(decor_time - eas_time)
+    time_difference = decor_time - eas_time
     time_differences.append(time_difference)
 
 # Построение гистограммы
 plt.hist(time_differences, bins=50, color='blue', edgecolor='black')
-plt.title('Гистограмма разницы времени между decor_time и eas_time', fontsize=18)  # Set title font size
-plt.xlabel('Разница времени (ns)', fontsize=18)  # Set x-axis label font size
+plt.title('Гистограмма числа совместных событий', fontsize=18)  # Set title font size
+plt.xlabel('Время между событиями: decor_time - eas_time', fontsize=18)  # Set x-axis label font size
 plt.ylabel('Число событий', fontsize=18)  # Set y-axis label font size
 plt.xticks(fontsize=12)  # Set x-axis tick font size
 plt.yticks(fontsize=12)  # Set y-axis tick font size

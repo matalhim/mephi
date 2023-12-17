@@ -23,9 +23,11 @@ counts = list(angle_counts.values())
 
 # Построение гистограммы
 plt.bar(angles, counts, align='center')
-plt.xlabel('Угол Alpha (градусы)')
-plt.ylabel('Число файлов')
-plt.title('Диаграмма угла Alpha от числа файлов')
+plt.xlabel('Пространственный угол alpha (градусы)', fontsize=18)
+plt.ylabel('Число событий', fontsize=18)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.title('гистограмма числа совместных событий от пространственного угла', fontsize=18)
 
 # Вычисляем квантиль Q2 (медиана)
 q2 = np.percentile(angles, 50)
@@ -39,7 +41,7 @@ print(f"Квантиль 67%: {q67}")
 plt.axvline(x=q67, color='red', linestyle='--', label='Квантиль 67%\nугол alpha = {})'.format(round(q67, 2)))
 
 # Вывод легенды
-plt.legend()
+plt.legend(fontsize=18)
 
 # Показать гистограмму
 plt.show()

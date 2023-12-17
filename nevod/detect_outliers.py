@@ -2,8 +2,8 @@
 import numpy as np
 
 def detect_outliers(data):
-    Q1 = np.percentile(data, 40)
-    Q3 = np.percentile(data, 60)
+    Q1 = np.percentile(data, 0)
+    Q3 = np.percentile(data, 100)
     IQR = Q3 - Q1
 
     lower_bound = Q1 - 1.5 * IQR
