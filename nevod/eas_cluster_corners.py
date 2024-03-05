@@ -8,7 +8,7 @@ db = client['nevod']
 eas_events_data = db['eas_events_data']
 
 # Новая коллекция
-eas_events_corners = db['eas_events_corners']
+eas_events_corners = db['eas_events_direction']
 
 # Получение данных из eas_events_data
 eas_events_data_cursor = eas_events_data.find()
@@ -22,8 +22,16 @@ for eas_event_data in eas_events_data_cursor:
         'data_list': [
             {
                 'cluster': obj.get('cluster'),
-                'theta': obj.get('direction', {}).get('theta'),
-                'phi': obj.get('direction', {}).get('phi'),
+                'stations': obj.get('stations'),
+
+                'direction': {
+                    'theta': obj.get('direction', {}).get('theta', None),
+                    'phi': obj.get('direction', {}).get('phi', None),
+                    'a_x': obj.get('direction', {}).get('a_x', None),
+                    'a_y': obj.get('direction', {}).get('a_y', None),
+                    'a_z': obj.get('direction', {}).get('a_z', None),
+
+                }
             }
             for obj in eas_event_data.get('data_list', [])
         ]

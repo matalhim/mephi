@@ -29,15 +29,21 @@ documents = collection.find()
 
 # Обновляем каждый документ в коллекции
 for document in documents:
-    theta1 = document['decor_Theta']
-    phi1 = document['decor_Phi']
-    theta2 = document['average_eas_theta']
-    phi2 = document['average_eas_phi']
+    decor_theta = document['decor_Theta']
+    decor_phi = document['decor_Phi']
+
+    average_eas_theta = document['average_eas_theta']
+    average_eas_phi = document['average_eas_phi']
+
+    median_eas_theta = document['median_eas_theta']
+    median_eas_phi = document['median_eas_phi']
 
     # Вычисляем угол между векторами
-    alpha = angle_between_vectors(theta1, phi1, theta2, phi2)
+
+    average_alpha = angle_between_vectors(decor_theta, decor_phi, average_eas_theta, average_eas_phi)
+    median_alpha = angle_between_vectors(decor_theta, decor_phi, median_eas_theta, median_eas_phi)
 
     # Записываем результат в новое поле "angle_alpha" для каждого документа
-    collection.update_one({"_id": document["_id"]}, {"$set": {"angle_alpha": alpha}})
+    collection.update_one({"_id": document["_id"]}, {"$set": {"angle_alpha": average_alpha, "median_alpha": median_alpha}})
 
 print("Углы успешно вычислены и записаны в коллекцию.")
