@@ -40,10 +40,11 @@ events_list = []
 
 for direction in event_data['eas_event_direction']:
     cluster = direction['cluster']
-    for station, station_data in direction['stations'].items():
-        station_number = int(station.split('_')[1])
-        time = station_data['t_std']
-        events_list.append({'cluster': cluster, 'ds': station_number, 'time': time})
+    if cluster == 8:
+        for station, station_data in direction['stations'].items():
+            station_number = int(station.split('_')[1])
+            time = station_data['t_std']
+            events_list.append({'cluster': cluster, 'ds': station_number, 'time': time})
 df_events = pd.DataFrame(events_list)
 df_events= df_events.sort_values(by='time') #станции по порядку срабатывания
 print(df_events)
@@ -75,9 +76,9 @@ print(distances)
 
 
 
-def calculate_eas_flatness_coefficients(theta, phi, coordinates):
-    theta_rad = np.deg2rad(theta)
-    theta_rad = np.deg2rad(theta)
+def calculate_eas_flatness_coefficients(theta_degrees, phi_degrees, coordinates):
+    theta = np.deg2rad(theta_degrees)
+    phi = np.deg2rad(phi_degrees)
     x, y, z = coordinates
     a = np.sin(theta) * np.cos(phi)
     b = np.sin(theta) * np.sin(phi)
@@ -97,7 +98,7 @@ min_result = float('inf')
 best_theta = None
 best_phi = None
 
-for theta in range(0, 180):
+for theta in range(0, 90):
     for phi in range(0, 360):
         result = 0
         for i in range(len(coordinates)-1):
@@ -110,7 +111,6 @@ for theta in range(0, 180):
             best_phi = phi
 
 print(best_theta, best_phi)
-print("Best phi:", best_phi)
 
 
 coefficients = calculate_eas_flatness_coefficients(90, 30, *[[1,1,1]])
